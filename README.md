@@ -35,3 +35,9 @@ docker-compose up --build
     ○ Listagem dos filmes que o usuário avaliou
     ○ Além de título/pôster, deve conter a nota do usuário
     ○ Interação: Ao clicar em um filme, abre um modal/página do filme
+
+## Database modelling
+
+![classdiagram](./planning/classdiagram.png)
+
+Note: more data was added to Movie class so that it is not necessary to retrieve that data from external services always. The composition of actors is not maintained in the database with the assumption that it doesn't have intensive use.
