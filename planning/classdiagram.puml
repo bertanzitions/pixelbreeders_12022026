@@ -1,0 +1,35 @@
+@startuml
+!theme plain
+hide circle
+
+
+skinparam nodesep 80
+skinparam ranksep 100
+
+class User {
+  id: Integer
+  email: String
+  password_hash: String
+}
+
+class Movie {
+  tmdb_id: Integer
+  title: String
+  poster_path: String
+  backdrop_path: String
+  release_date: DateTime
+  overview: String
+  
+}
+
+class Rating {
+  id: Integer
+  score: Integer
+  createdAt: DateTime
+}
+
+
+Rating "0..*" -left- "1" User : creates  < 
+Rating "0..*" -right- "1" Movie : < receives
+
+@enduml
