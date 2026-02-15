@@ -7,6 +7,8 @@
   box-shadow: var(--shadow-card);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -19,10 +21,42 @@
   height: 300px;
   object-fit: cover;
   border-bottom: 5px solid var(--bb-yellow);
+  background-color: #f0f0f0; 
+}
+
+.noImage {
+  width: 100%;
+  height: 300px; /* Important to match the img height */
+  background-color: var(--bb-blue);
+  color: var(--bb-yellow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 5px solid var(--bb-yellow);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  gap: 10px;
+}
+
+.content {
+  padding: 15px 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .card h3 {
   font-size: 16px;
-  margin: 15px 10px;
+  margin: 0 0 10px 0;
   color: var(--bb-blue);
+  line-height: 1.4;
+}
+
+.card p {
+  margin: auto 0 0 0; 
+  font-size: 14px;
+  color: #6b778c;
 }

@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Movie, RatedMovie } from '../../types';
+import FilmIcon from '../misc/FilmIcon';
 import styles from './MovieCard.module.css';
 
 interface MovieCardProps {
@@ -8,7 +9,6 @@ interface MovieCardProps {
 }
 
 const MovieCard = forwardRef<HTMLDivElement, MovieCardProps>(({ movie, onClick }, ref) => {
-  // check if movie was already rated
   const rating = (movie as RatedMovie).userRating;
 
   return (
@@ -16,10 +16,16 @@ const MovieCard = forwardRef<HTMLDivElement, MovieCardProps>(({ movie, onClick }
       {movie.poster_path ? (
         <img src={movie.poster_path} alt={movie.title} />
       ) : (
-        <div className={styles.noImage}>No Image</div>
+        <div className={styles.noImage}>
+          <FilmIcon />
+          <span>Image Unavailable</span>
+        </div>
       )}
-      <h3>{movie.title}</h3>
-      {rating && <p>Rating: <strong>{rating}/5</strong></p>}
+      
+      <div className={styles.content}>
+        <h3>{movie.title}</h3>
+        {rating && <p>Rating: <strong>{rating}/5</strong></p>}
+      </div>
     </div>
   );
 });

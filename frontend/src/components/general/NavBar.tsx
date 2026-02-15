@@ -1,5 +1,7 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
+import styles from './NavBar.module.css';
+import logo from '../../assets/logo.png';
 
 interface NavbarProps {
   currentView: 'search' | 'reviewed';
@@ -10,20 +12,39 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView }) => {
   const { user, logout } = useAuth();
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid black', marginBottom: '20px' }}>
-      <nav style={{ border: 'none', marginBottom: 0 }}>
-        <button className={currentView === 'search' ? 'active' : ''} onClick={() => setView('search')}>
-          Search
-        </button>
-        <button className={currentView === 'reviewed' ? 'active' : ''} onClick={() => setView('reviewed')}>
-          Reviewed
-        </button>
-      </nav>
-      <div>
-        <span style={{ marginRight: '10px' }}>{user?.email}</span>
-        <button onClick={logout}>Logout</button>
+    <header className={styles.navbar}>
+      <div className={styles.leftSection}>
+        {/* Logo Click resets to Search view (optional UX choice) */}
+        <img 
+          src={logo} 
+          alt="Blockbuster Logo" 
+          className={styles.logo} 
+          onClick={() => setView('search')}
+        />
+
+        <nav className={styles.navLinks}>
+          <button 
+            className={`${styles.navButton} ${currentView === 'search' ? styles.active : ''}`} 
+            onClick={() => setView('search')}
+          >
+            Search
+          </button>
+          <button 
+            className={`${styles.navButton} ${currentView === 'reviewed' ? styles.active : ''}`} 
+            onClick={() => setView('reviewed')}
+          >
+            My Reviews
+          </button>
+        </nav>
       </div>
-    </div>
+
+      <div className={styles.userSection}>
+        <span className={styles.email}>{user?.email}</span>
+        <button onClick={logout} className={styles.logoutBtn}>
+          Logout
+        </button>
+      </div>
+    </header>
   );
 };
 
