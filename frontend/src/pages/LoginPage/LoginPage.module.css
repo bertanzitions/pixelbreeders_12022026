@@ -1,0 +1,41 @@
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Background image from assets */
+  background-image: url('../../assets/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.loginCard {
+  background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
+  padding: 40px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border-top: 8px solid var(--bb-yellow); /* Branding accent */
+  text-align: center;
+}
+
+.loginCard h2 {
+  color: var(--bb-blue);
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.toggleText {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: var(--bb-text);
+}

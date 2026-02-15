@@ -14,7 +14,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView }) => {
   return (
     <header className={styles.navbar}>
       <div className={styles.leftSection}>
-        {/* Logo Click resets to Search view (optional UX choice) */}
         <img 
           src={logo} 
           alt="Blockbuster Logo" 
