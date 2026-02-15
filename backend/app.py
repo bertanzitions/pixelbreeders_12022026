@@ -6,6 +6,7 @@ from flask_jwt_extended import JWTManager
 from models import db
 
 from routes.auth import auth_bp
+from routes.review import reviews_bp
 
 app = Flask(__name__)
 CORS(app)
@@ -19,6 +20,7 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 app.register_blueprint(auth_bp, url_prefix='/auth') 
+app.register_blueprint(reviews_bp, url_prefix='/reviews') 
 
 @app.route('/', methods=['GET'])
 def hello():
