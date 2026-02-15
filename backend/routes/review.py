@@ -20,6 +20,7 @@ def get_user_ratings():
             "movie": {
                 "tmdb_id": rating.movie.tmdb_id,
                 "title": rating.movie.title,
+                "overview": rating.movie.overview,
                 "poster_path": rating.movie.poster_path,
                 "backdrop_path": rating.movie.backdrop_path,
                 "release_date": rating.movie.release_date.strftime('%Y-%m-%d') if rating.movie.release_date else None,
