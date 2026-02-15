@@ -1,0 +1,49 @@
+.button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* VARIANTS */
+/* Normal action button */
+.primary {
+  background-color: var(--bb-blue);
+  color: var(--bb-white);
+  border: 2px solid var(--bb-blue);
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.primary:hover {
+  background-color: #0c2958;
+  border-color: #0c2958;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Link style (like register here) */
+.link {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--bb-blue);
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+.link:hover {
+  color: var(--bb-blue);
+  text-decoration: none;
+}

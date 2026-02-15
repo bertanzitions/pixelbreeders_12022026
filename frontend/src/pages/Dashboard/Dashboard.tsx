@@ -2,8 +2,8 @@ import React from 'react';
 import { useDashboard } from '../../hooks/useDashboard';
 import Navbar from '../../components/general/NavBar';
 import MovieModal from '../../components/search/MovieModal';
-import SearchSection from '../../components/dashboard/SearchSection';
-import ReviewedSection from '../../components/dashboard/ReviewedSection';
+import SearchSection from '../../components/dashboard/SearchSection/SearchSection';
+import ReviewedSection from '../../components/dashboard/ReviewedSection/ReviewedSection';
 
 const Dashboard = () => {
   const {

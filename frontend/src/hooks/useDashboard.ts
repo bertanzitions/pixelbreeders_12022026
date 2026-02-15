@@ -90,6 +90,10 @@ export const useDashboard = () => {
   // handlers
   const handleSearchFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // updates it every time that it is searched so that
+    // no review movie is left behind
+    fetchReviewedMovies();
+    
     setPage(1);
     setSearchResults([]);
     setTotalPages(0);
@@ -97,9 +101,19 @@ export const useDashboard = () => {
   };
 
   const openModal = (movie: Movie) => {
-    const existing = reviewedMovies.find(r => r.tmdb_id === movie.tmdb_id);
-    setSelectedMovie(existing || { ...movie });
-  };
+
+    // HAS TO BE STRING!!
+    console.log(movie)
+    const existing = reviewedMovies.find(r => 
+        String(r.tmdb_id) === String(movie.tmdb_id)
+    );
+    
+    if (existing) {
+        setSelectedMovie(existing);
+    } else {
+        setSelectedMovie({ ...movie });
+    }
+};
 
   const closeModal = () => setSelectedMovie(null);
 

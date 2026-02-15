@@ -1,8 +1,9 @@
 import React from 'react';
-import { Movie } from '../../types';
-import Input from '../misc/Input';
-import Button from '../misc/Button';
-import MovieCard from '../search/MovieCard';
+import { Movie } from '../../../types';
+import Input from '../../misc/Input';
+import Button from '../../misc/Button';
+import MovieCard from '../../search/MovieCard';
+import styles from './SearchSection.module.css';
 
 interface SearchSectionProps {
   query: string;
@@ -24,23 +25,19 @@ const SearchSection: React.FC<SearchSectionProps> = ({
   isLoading
 }) => {
   return (
-    <div className="page-search">
-      <form 
-        className="search-bar" 
-        onSubmit={onSubmit} 
-        style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}
-      >
+    <div className={styles.container}>
+      <form className={styles.searchBarForm} onSubmit={onSubmit}>
         <Input 
           type="text" 
           placeholder="Search..." 
           value={query} 
           onChange={e => setQuery(e.target.value)}
-          style={{ flex: 1, padding: '8px' }} 
+          style={{ flex: 1 }} 
         />
         <Button type="submit">Search</Button>
       </form>
       
-      <div className="movie-grid">
+      <div className={styles.movieGrid}>
         {results.map((movie, index) => {
           const isLast = results.length === index + 1;
           return (
@@ -54,7 +51,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({
         })}
       </div>
       
-      {isLoading && <p style={{textAlign: 'center', padding: '20px'}}>Loading...</p>}
+      {isLoading && <p className={styles.loading}>Loading...</p>}
     </div>
   );
 };

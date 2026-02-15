@@ -1,0 +1,28 @@
+.card {
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-bottom: 5px solid var(--bb-yellow);
+}
+
+.card h3 {
+  font-size: 16px;
+  margin: 15px 10px;
+  color: var(--bb-blue);
+}

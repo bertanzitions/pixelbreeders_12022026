@@ -1,104 +1,23 @@
-/* Container for the whole app */
+/* src/App.css */
+:root {
+  --bb-blue: #091E42;
+  --bb-yellow: #FFC907;
+  --bb-white: #ffffff;
+  --bb-bg: #f4f6f8;
+  --bb-text: #172b4d;
+  --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+body {
+  background-color: var(--bb-bg);
+  color: var(--bb-text);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0;
+}
+
 .app-container {
-  font-family: sans-serif;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-}
-
-/* Navigation Menu */
-nav {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid black;
-  padding-bottom: 10px;
-}
-
-nav button {
-  background: none;
-  border: 1px solid black;
-  padding: 5px 15px;
-  cursor: pointer;
-}
-
-nav button.active {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-/* Search Section */
-.search-bar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.search-bar input {
-  flex: 1;
-  padding: 5px;
-}
-
-/* Movie Grid (Used for both lists) */
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.movie-card {
-  border: 1px solid black;
-  padding: 10px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.movie-card img {
-  max-width: 100%;
-  height: auto;
-  border: 1px solid #ccc;
-}
-
-/* Modal Overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.9); /* White with slight opacity */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Modal Content */
-.modal-content {
-  background: white;
-  border: 2px solid black;
-  padding: 20px;
-  max-width: 600px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-/* Rating Section in Modal */
-.rating-section {
-  margin-top: 20px;
-  border-top: 1px solid black;
-  padding-top: 10px;
-}
-
-.rating-controls {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  padding: 40px 20px;
 }

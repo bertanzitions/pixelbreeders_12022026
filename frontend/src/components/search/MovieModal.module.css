@@ -1,0 +1,131 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(9, 30, 66, 0.92); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.content {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  will-change: transform, opacity; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #5e6c84;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  color: var(--bb-blue);
+}
+
+.backdrop {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  border-bottom: 4px solid var(--bb-yellow);
+}
+
+.title {
+  color: var(--bb-blue);
+  margin-top: 0;
+  margin-right: 30px;
+}
+
+.ratingSection {
+  margin-top: 30px;
+  border-top: 1px solid #ebecf0;
+  padding-top: 20px;
+}
+
+.ratingSection h4 {
+  margin: 0 0 15px 0;
+  color: var(--bb-blue);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.ratingControls {
+  display: flex;
+  gap: 10px;
+}
+
+.ratingBtn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #dfe1e6;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: normal;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
+  will-change: transform;
+}
+
+.ratingBtn:hover {
+  border-color: var(--bb-blue);
+  background-color: #f4f6f8;
+  transform: translateY(-2px);
+}
+
+.ratingBtnActive {
+  background-color: var(--bb-blue) !important;
+  color: var(--bb-yellow) !important;
+  border-color: var(--bb-blue) !important;
+  font-weight: bold;
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.deleteBtn {
+  margin-top: 15px;
+  color: #ff5630;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  padding: 0;
+  display: block;
+  margin-left: auto;
+  transition: color 0.2s;
+}
+
+.deleteBtn:hover {
+  color: #c9372c;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

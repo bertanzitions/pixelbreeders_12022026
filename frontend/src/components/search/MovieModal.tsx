@@ -1,5 +1,6 @@
 import React from 'react';
 import { RatedMovie } from '../../types';
+import styles from './MovieModal.module.css';
 
 interface MovieModalProps {
   movie: RatedMovie;
@@ -10,47 +11,46 @@ interface MovieModalProps {
 
 const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose, onRate, onDelete }) => {
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-button" onClick={onClose}>X</button>
+    <div className={styles.overlay} onClick={onClose}>
+      {/* avoid clicking inside the modal close it */}
+      <div className={styles.content} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.closeButton} onClick={onClose}>×</button>
 
-        <h2>{movie.title}</h2>
+        <h2 className={styles.title}>{movie.title}</h2>
 
         {movie.backdrop_path && (
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
             alt="Backdrop"
-            style={{ width: '100%', borderRadius: '4px', marginBottom: '10px' }}
+            className={styles.backdrop}
           />
         )}
 
         <p><strong>Release Date:</strong> {movie.release_date || 'Unknown'}</p>
         <p>{movie.overview || 'No synopsis available.'}</p>
 
-        <div className="rating-section">
+        <div className={styles.ratingSection}>
           <h4>Evaluation</h4>
-          <div className="rating-controls">
-            {[1, 2, 3, 4, 5].map((num) => (
-              <button
-                key={num}
-                onClick={() => onRate(num)}
-                style={{
-                  fontWeight: movie.userRating === num ? 'bold' : 'normal',
-                  background: movie.userRating === num ? '#ddd' : 'white',
-                  border: '1px solid black',
-                  padding: '5px 10px',
-                  cursor: 'pointer',
-                }}
-              >
-                {num}
-              </button>
-            ))}
+          
+          <div className={styles.ratingControls}>
+            {[1, 2, 3, 4, 5].map((num) => {
+              // Determine if this button represents the current user rating
+              const isActive = movie.userRating === num;
+              
+              return (
+                <button
+                  key={num}
+                  onClick={() => onRate(num)}
+                  className={`${styles.ratingBtn} ${isActive ? styles.ratingBtnActive : ''}`}
+                >
+                  {num}
+                </button>
+              );
+            })}
           </div>
+
           {movie.userRating && (
-            <button
-              onClick={onDelete}
-              style={{ marginTop: '10px', color: 'red', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
-            >
+            <button onClick={onDelete} className={styles.deleteBtn}>
               Remove Rating
             </button>
           )}
