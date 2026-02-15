@@ -4,6 +4,9 @@ You must have Docker installed
 # How to install
 docker-compose up --build
 
+# How to test
+docker-compose exec backend pytest --cov
+
 # Implementation plan + requirements
 
 ## Basic setup
