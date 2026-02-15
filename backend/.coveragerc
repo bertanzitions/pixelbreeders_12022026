@@ -1,0 +1,11 @@
+[run]
+source = .
+omit =
+    tests/*
+    */__init__.py
+    extensions.py
+    # Add migrations if you have them
+    migrations/*
+
+[report]
+show_missing = True

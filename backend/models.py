@@ -21,6 +21,7 @@ class User(db.Model):
         """Checks if the provided password matches the hash"""
         return check_password_hash(self.password_hash, password)
 
+    # these methods are for printing properly in terminal, not only a <models.User> for example
     def __repr__(self):
         return f'<User {self.email}>'
 

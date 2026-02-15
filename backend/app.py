@@ -4,27 +4,33 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from models import db
-
 from routes.auth import auth_bp
 from routes.review import reviews_bp
 
-app = Flask(__name__)
-CORS(app)
+def create_app(config_override=None):
+    app = Flask(__name__)
+    CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["JWT_SECRET_KEY"] = "pixelbreeders"
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config["JWT_SECRET_KEY"] = "pixelbreeders"
 
-jwt = JWTManager(app)
-db.init_app(app)
-migrate = Migrate(app, db)
+    if config_override:
+        app.config.update(config_override)
 
-app.register_blueprint(auth_bp, url_prefix='/auth') 
-app.register_blueprint(reviews_bp, url_prefix='/reviews') 
+    jwt = JWTManager(app)
+    db.init_app(app)
+    migrate = Migrate(app, db)
 
-@app.route('/', methods=['GET'])
-def hello():
-    return jsonify({"msg": "Hello world!"}), 200
+    app.register_blueprint(auth_bp, url_prefix='/auth') 
+    app.register_blueprint(reviews_bp, url_prefix='/reviews') 
+
+    @app.route('/', methods=['GET'])
+    def hello():
+        return jsonify({"msg": "Hello world!"}), 200
+    
+    return app
 
 if __name__ == '__main__':
+    app = create_app()
     app.run(host='0.0.0.0', port=5000, debug=True)

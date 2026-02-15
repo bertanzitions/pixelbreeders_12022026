@@ -12,6 +12,7 @@ services:
 
   backend:
     build: ./backend
+    
     ports:
       - "5000:5000"
     depends_on:
@@ -19,6 +20,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://lucassb:lucassb@db:5432/pixelbreeders
       - TMDB_API_KEY=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NmI5MmY0N2QwOGNmZTEzYjMxOThkNjFlODU3NjkzNiIsIm5iZiI6MTc3MDkxNjU3MS45NDMsInN1YiI6IjY5OGUwYWRiNDcwZWZjMzRiNDQxNmVhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DmXH3cBPl-M54tJzTNatIios8tA8iK65R1q-SLrdjkY
+      - PYTHONPATH=/app
     volumes:
       - ./backend:/app  # permite hot reload
   # frontend:
