@@ -20,7 +20,12 @@ const Dashboard = () => {
     handleDeleteRating,
     openModal,
     closeModal,
-    lastMovieElementRef
+    lastMovieElementRef,
+    year,
+    setYear,
+    genre,
+    setGenre,
+    genresList
   } = useDashboard();
 
   return (
@@ -36,6 +41,11 @@ const Dashboard = () => {
           lastElementRef={lastMovieElementRef}
           onMovieClick={openModal}
           isLoading={isLoading}
+          year={year}
+          setYear={setYear}
+          genre={genre}
+          setGenre={setGenre}
+          genresList={genresList}
         />
       ) : (
         <ReviewedSection 

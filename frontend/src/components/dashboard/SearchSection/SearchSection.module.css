@@ -4,14 +4,48 @@
 }
 
 .searchBarForm {
-  display: flex;
-  gap: 15px;
   margin-bottom: 30px;
   background-color: var(--bb-white);
   padding: 20px;
   border-radius: 8px;
   box-shadow: var(--shadow-card);
   border-left: 5px solid var(--bb-yellow);
+}
+
+.filtersRow {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #42526e;
+  margin-left: 2px;
+}
+
+.selectInput {
+  padding: 10px;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 1rem;
+  height: 42px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.buttonGroup {
+  padding-bottom: 1px;
 }
 
 .movieGrid {

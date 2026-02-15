@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Movie, RatedMovie } from '../types';
+import { Movie, RatedMovie, Genre } from '../types'; // Import Genre
 import { movieService } from '../services/movieService';
 import { useInfiniteScroll } from './useInfiniteScroll';
 
@@ -11,14 +11,32 @@ export const useDashboard = () => {
   const [currentView, setCurrentView] = useState<'search' | 'reviewed'>('search');
   const [selectedMovie, setSelectedMovie] = useState<RatedMovie | null>(null);
 
+  // Search & Filter State
   const [query, setQuery] = useState('');
+  const [year, setYear] = useState('');       // NEW
+  const [genre, setGenre] = useState('');     // NEW (stores the ID)
+  const [genresList, setGenresList] = useState<Genre[]>([]); // NEW (stores list for dropdown)
+
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [reviewedMovies, setReviewedMovies] = useState<RatedMovie[]>([]);
   
-  // page state
+  // Pagination State
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch the list of genres when the hook loads
+  useEffect(() => {
+    const loadGenres = async () => {
+      try {
+        const list = await movieService.getGenres();
+        setGenresList(list);
+      } catch (error) {
+        console.error("Failed to load genres", error);
+      }
+    };
+    loadGenres();
+  }, []);
 
   // --- ACTIONS ---
 
@@ -26,8 +44,6 @@ export const useDashboard = () => {
     if (!user?.token) return;
     try {
       const data = await movieService.getRatedMovies(user.token, logout);
-      
-      // API response to front end model
       const formatted = data.map((item: any) => ({
         ...item.movie,
         userRating: item.movie.rating
@@ -38,12 +54,14 @@ export const useDashboard = () => {
     }
   }, [user?.token, logout]);
 
+  // Updated search to include filters
   const performSearch = useCallback(async (pageNum: number, isNewSearch: boolean) => {
     if (!query.trim()) return;
     setIsLoading(true);
 
     try {
-      const data = await movieService.searchMovies(query, pageNum);
+      // Pass query, page, year, and genre ID to service
+      const data = await movieService.searchMovies(query, pageNum, year, genre);
       if (data.results) {
         setTotalPages(data.total_pages);
         setSearchResults(prev => isNewSearch ? data.results : [...prev, ...data.results]);
@@ -53,17 +71,15 @@ export const useDashboard = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [query]);
+  }, [query, year, genre]); // Dependencies include filters
 
   const handleRateMovie = async (score: number) => {
     if (!selectedMovie || !user?.token) return;
     try {
       const isUpdate = !!selectedMovie.userRating;
       await movieService.rateMovie(user.token, selectedMovie, score, isUpdate, logout);
-      
       setSelectedMovie({ ...selectedMovie, userRating: score });
       if (currentView === 'reviewed') fetchReviewedMovies();
-      
     } catch (error) {
       console.error("Rate movie error", error);
     }
@@ -73,12 +89,9 @@ export const useDashboard = () => {
     if (!selectedMovie || !user?.token) return;
     try {
       await movieService.deleteRating(user.token, selectedMovie.tmdb_id, logout);
-      
-      // Optimistic UI Update
       const movieReset = { ...selectedMovie };
       delete movieReset.userRating;
       setSelectedMovie(movieReset);
-      
       if (currentView === 'reviewed') {
         setReviewedMovies(prev => prev.filter(m => m.tmdb_id !== selectedMovie.tmdb_id));
       }
@@ -87,13 +100,10 @@ export const useDashboard = () => {
     }
   };
 
-  // handlers
+  // Handlers
   const handleSearchFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // updates it every time that it is searched so that
-    // no review movie is left behind
     fetchReviewedMovies();
-    
     setPage(1);
     setSearchResults([]);
     setTotalPages(0);
@@ -101,24 +111,13 @@ export const useDashboard = () => {
   };
 
   const openModal = (movie: Movie) => {
-
-    // HAS TO BE STRING!!
-    console.log(movie)
-    const existing = reviewedMovies.find(r => 
-        String(r.tmdb_id) === String(movie.tmdb_id)
-    );
-    
-    if (existing) {
-        setSelectedMovie(existing);
-    } else {
-        setSelectedMovie({ ...movie });
-    }
-};
+    const existing = reviewedMovies.find(r => String(r.tmdb_id) === String(movie.tmdb_id));
+    setSelectedMovie(existing || { ...movie });
+  };
 
   const closeModal = () => setSelectedMovie(null);
 
-  // OBSERVERS / EFFECTS
-  // hook for infinite scroll
+  // Observers / Effects
   const lastMovieElementRef = useInfiniteScroll(
     isLoading, 
     page < totalPages, 
@@ -137,6 +136,9 @@ export const useDashboard = () => {
     currentView, setCurrentView,
     selectedMovie, openModal, closeModal,
     query, setQuery,
+    year, setYear,
+    genre, setGenre,
+    genresList,
     searchResults, reviewedMovies,
     isLoading,
     handleSearchFormSubmit,

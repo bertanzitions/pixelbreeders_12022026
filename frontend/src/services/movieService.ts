@@ -27,14 +27,15 @@ export const movieService = {
     return handleResponse(res, logout);
   },
 
-  searchMovies: async (query: string, page: number) => {
-    // Search is public, no token needed
-    const res = await fetch(`${API_URL}/movies/search?query=${encodeURIComponent(query)}&page=${page}`, {
-      headers: { 'Content-Type': 'application/json' }
-    });
-    return res.json(); 
+  searchMovies: async (query: string, page: number, year?: string, genre?: string) => {
+    let url = `${API_URL}/movies/search?query=${encodeURIComponent(query)}&page=${page}`;
+    if (year) url += `&year=${year}`;
+    if (genre) url += `&genre=${genre}`;
+    
+    const res = await fetch(url, { headers: { 'Content-Type': 'application/json' } });
+    return res.json();
   },
-
+  
   rateMovie: async (token: string, movie: Movie, score: number, isUpdate: boolean, logout: () => void) => {
     const method = isUpdate ? 'PUT' : 'POST';
     const url = isUpdate 
@@ -67,5 +68,13 @@ export const movieService = {
       headers: getHeaders(token)
     });
     return handleResponse(res, logout);
-  }
+  },
+
+  getGenres: async () => {
+    const res = await fetch(`${API_URL}/genres`);
+    if (!res.ok) throw new Error('Failed to fetch genres');
+    return res.json(); // Returns Genre[]
+  },
+
+  
 };
