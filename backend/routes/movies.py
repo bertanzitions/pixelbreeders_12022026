@@ -11,6 +11,8 @@ TMDB_BASE_URL = os.environ.get('TMDB_BASE_URL')
 def search_movies():
     query = request.args.get('query')
     page = request.args.get('page', 1, type=int)
+    year = request.args.get('year')
+    genre_id = request.args.get('genre')
 
     if not query:
         return jsonify({'error': 'Query parameter is required'}), 400
@@ -27,6 +29,9 @@ def search_movies():
         "page": page
     }
 
+    if year:
+        params["primary_release_year"] = year
+
     try:
         response = requests.get(f"{TMDB_BASE_URL}/search/movie", headers=headers, params=params)
         response.raise_for_status()
@@ -34,6 +39,9 @@ def search_movies():
         
         results = []
         for item in data.get('results', []):
+            if genre_id and int(genre_id) not in item.get('genre_ids', []):
+                continue
+
             poster_url = f"https://image.tmdb.org/t/p/w500{item.get('poster_path')}" if item.get('poster_path') else None
             
             results.append({
@@ -52,8 +60,6 @@ def search_movies():
         }), 200
 
     except requests.exceptions.RequestException as e:
-        print(f"Error calling TMDB: {e}")
-
         if e.response is not None:
              return jsonify(e.response.json()), e.response.status_code
         return jsonify({'error': 'Failed to fetch data from TMDB'}), 502

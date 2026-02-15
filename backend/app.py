@@ -7,6 +7,7 @@ from models import db
 from routes.auth import auth_bp
 from routes.review import reviews_bp
 from routes.movies import movies_bp
+from routes.genres import genres_bp
 
 def create_app(config_override=None):
     app = Flask(__name__)
@@ -26,6 +27,7 @@ def create_app(config_override=None):
     app.register_blueprint(auth_bp, url_prefix='/auth') 
     app.register_blueprint(reviews_bp, url_prefix='/reviews') 
     app.register_blueprint(movies_bp, url_prefix='/movies') 
+    app.register_blueprint(genres_bp, url_prefix='/genres') 
 
     @app.route('/', methods=['GET'])
     def hello():
