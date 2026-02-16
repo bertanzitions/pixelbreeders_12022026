@@ -1,5 +1,4 @@
 services:
-  # BACKEND
   - type: web
     name: pixelbreeders-backend
     env: python
@@ -18,20 +17,3 @@ services:
         sync: false
       - key: CACHE_REDIS_URL
         sync: false
-
-  # FRONTEND
-  - type: static_site
-    name: pixelbreeders-frontend
-    rootDir: frontend
-    buildCommand: "npm install && npm run build"
-    publishDir: build
-    routes:
-      - type: rewrite
-        source: "/*"
-        destination: /index.html
-    envVars:
-      - key: REACT_APP_API_URL
-        fromService:
-          type: web
-          name: pixelbreeders-backend
-          property: url
