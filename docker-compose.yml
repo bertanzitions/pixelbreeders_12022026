@@ -9,14 +9,21 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      
+    # ensures DB is ready before backend tries to connect
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lucassb -d pixelbreeders"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
-    
     ports:
       - "5000:5000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://lucassb:lucassb@db:5432/pixelbreeders
       - TMDB_API_KEY=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NmI5MmY0N2QwOGNmZTEzYjMxOThkNjFlODU3NjkzNiIsIm5iZiI6MTc3MDkxNjU3MS45NDMsInN1YiI6IjY5OGUwYWRiNDcwZWZjMzRiNDQxNmVhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DmXH3cBPl-M54tJzTNatIios8tA8iK65R1q-SLrdjkY
@@ -24,7 +31,24 @@ services:
       - PYTHONPATH=/app
       - JWT_SECRET_KEY=pixelbreeders
     volumes:
-      - ./backend:/app  # permite hot reload
+      - ./backend:/app
+    # handles migrations when first deploy or not
+    command: >
+      sh -c "
+      echo 'Checking for migrations...'
+      if [ ! -d 'migrations' ]; then
+        echo 'No migrations folder found. Initializing DB...';
+        flask db init;
+        flask db migrate -m 'Initial Auto-Migration';
+        flask db upgrade;
+      else
+        echo 'Migrations folder found. Applying any pending updates...';
+        flask db upgrade;
+      fi;
+      echo 'Starting Application...';
+      exec python app.py;
+      "
+
   frontend:
     build: ./frontend
     ports:
@@ -37,7 +61,7 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    stdin_open: true # Necessário para React rodar corretamente no Docker
+    stdin_open: true
 
 volumes:
   postgres_data:
