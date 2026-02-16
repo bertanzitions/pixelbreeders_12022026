@@ -35,7 +35,7 @@ services:
     # handles migrations when first deploy or not
     command: >
       sh -c "
-      echo 'Checking for migrations...'
+      echo 'Checking for migrations...';
       if [ ! -d 'migrations' ]; then
         echo 'No migrations folder found. Initializing DB...';
         flask db init;
