@@ -1,4 +1,5 @@
 services:
+  # BACKEND
   - type: web
     name: pixelbreeders-backend
     env: python
@@ -10,14 +11,15 @@ services:
       - key: PYTHON_VERSION
         value: 3.10.0
       - key: DATABASE_URL
-        sync: false # to enter manually
-      - key: REDIS_URL
         sync: false
       - key: TMDB_API_KEY
         sync: false
       - key: JWT_SECRET_KEY
         sync: false
+      - key: CACHE_REDIS_URL
+        sync: false
 
+  # FRONTEND
   - type: static
     name: pixelbreeders-frontend
     env: static
