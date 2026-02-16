@@ -1,6 +1,8 @@
 import React from 'react';
-import { RatedMovie } from '../../types';
+import { RatedMovie } from '../../../types';
 import styles from './MovieModal.module.css';
+import CastSection from './CastSection';
+import RatingSection from './RatingSection';
 
 interface MovieModalProps {
   movie: RatedMovie;
@@ -12,7 +14,6 @@ interface MovieModalProps {
 const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose, onRate, onDelete }) => {
   return (
     <div className={styles.overlay} onClick={onClose}>
-      {/* avoid clicking inside the modal close it */}
       <div className={styles.content} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeButton} onClick={onClose}>×</button>
 
@@ -29,32 +30,13 @@ const MovieModal: React.FC<MovieModalProps> = ({ movie, onClose, onRate, onDelet
         <p><strong>Release Date:</strong> {movie.release_date || 'Unknown'}</p>
         <p>{movie.overview || 'No synopsis available.'}</p>
 
-        <div className={styles.ratingSection}>
-          <h4>Evaluation</h4>
-          
-          <div className={styles.ratingControls}>
-            {[1, 2, 3, 4, 5].map((num) => {
-              // Determine if this button represents the current user rating
-              const isActive = movie.userRating === num;
-              
-              return (
-                <button
-                  key={num}
-                  onClick={() => onRate(num)}
-                  className={`${styles.ratingBtn} ${isActive ? styles.ratingBtnActive : ''}`}
-                >
-                  {num}
-                </button>
-              );
-            })}
-          </div>
-
-          {movie.userRating && (
-            <button onClick={onDelete} className={styles.deleteBtn}>
-              Remove Rating
-            </button>
-          )}
-        </div>
+        <CastSection movieId={movie.tmdb_id} />
+        
+        <RatingSection 
+          userRating={movie.userRating} 
+          onRate={onRate} 
+          onDelete={onDelete} 
+        />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { RatedMovie } from '../../../types';
-import MovieCard from '../../search/MovieCard';
+import MovieCard from '../../search/MovieCard/MovieCard';
 import styles from './ReviewedSection.module.css';
 
 interface ReviewedSectionProps {

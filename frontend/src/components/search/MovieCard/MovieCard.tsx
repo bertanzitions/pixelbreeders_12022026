@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
-import { Movie, RatedMovie } from '../../types';
-import FilmIcon from '../misc/FilmIcon';
+import { Movie, RatedMovie } from '../../../types';
+import FilmIcon from '../../misc/FilmIcon';
 import styles from './MovieCard.module.css';
 
 interface MovieCardProps {

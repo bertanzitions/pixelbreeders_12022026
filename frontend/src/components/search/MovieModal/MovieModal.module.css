@@ -129,3 +129,108 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* --- Cast Section Styles --- */
+.castSection {
+  margin: 15px 0;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.castToggleBtn {
+  background-color: #f4f5f7;
+  border: 1px solid #dfe1e6;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #172b4d;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.castToggleBtn:hover {
+  background-color: #ebecf0;
+}
+
+.castContainer {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  max-height: 250px; /* Limits height to make it scrollable */
+  overflow-y: auto;  /* Enables vertical scrolling */
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+.castList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.castCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+.castCard img {
+  width: 50px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.noPhoto {
+  width: 50px;
+  height: 75px;
+  background: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  color: white;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.castInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.actorName {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin: 0;
+  color: #172b4d;
+}
+
+.characterName {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 2px 0;
+}
+
+/* NEW STYLE */
+.department {
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.castLoading {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Movie, Genre } from '../../../types';
 import Input from '../../misc/Input';
 import Button from '../../misc/Button';
-import MovieCard from '../../search/MovieCard';
+import MovieCard from '../../search/MovieCard/MovieCard';
 import styles from './SearchSection.module.css';
 
 interface SearchSectionProps {

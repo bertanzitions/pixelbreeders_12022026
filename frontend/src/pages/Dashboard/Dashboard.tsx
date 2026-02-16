@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDashboard } from '../../hooks/useDashboard';
 import Navbar from '../../components/general/NavBar';
-import MovieModal from '../../components/search/MovieModal';
+import MovieModal from '../../components/search/MovieModal/MovieModal';
 import SearchSection from '../../components/dashboard/SearchSection/SearchSection';
 import ReviewedSection from '../../components/dashboard/ReviewedSection/ReviewedSection';
 
