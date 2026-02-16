@@ -22,6 +22,7 @@ services:
       - TMDB_API_KEY=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NmI5MmY0N2QwOGNmZTEzYjMxOThkNjFlODU3NjkzNiIsIm5iZiI6MTc3MDkxNjU3MS45NDMsInN1YiI6IjY5OGUwYWRiNDcwZWZjMzRiNDQxNmVhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DmXH3cBPl-M54tJzTNatIios8tA8iK65R1q-SLrdjkY
       - TMDB_BASE_URL=https://api.themoviedb.org/3
       - PYTHONPATH=/app
+      - JWT_SECRET_KEY=pixelbreeders
     volumes:
       - ./backend:/app  # permite hot reload
   frontend:
