@@ -48,6 +48,21 @@ To run the unit tests and check code coverage for the backend:
 
     docker-compose exec backend pytest --cov
 
+> **Note on Coverage**: All core business logic and API routes have 100% unit test coverage. 
+> The minor misses in `app.py` are related to the standard application factory boilerplate 
+> and local debug execution blocks.
+
+| Name | Stmts | Miss | Cover | Missing |
+|--|--|--|--|--|
+| **app.py** | 39 | 5 | 87% | 21-22, 44, 49-50 |
+| **models.py** | 37 | 0 | 100% | |
+| **routes/auth.py** | 36 | 0 | 100% | |
+| **routes/cast.py** | 23 | 0 | 100% | |
+| **routes/genres.py** | 22 | 0 | 100% | |
+| **routes/movies.py** | 35 | 0 | 100% | |
+| **routes/review.py** | 75 | 0 | 100% | |
+| **TOTAL** | **267** | **5** | **98%** | |
+
 ### 📝 Implementation plan + requirements
 **Basic setup**
 -   [x] Technical Stack & Setup

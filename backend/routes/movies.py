@@ -11,7 +11,7 @@ TMDB_BASE_URL = os.environ.get('TMDB_BASE_URL')
 # connects to the TMDB API and searches for movies
 # a query string is mandatory (movie title), not year, page and genre have defaultss
 @movies_bp.route('/search', methods=['GET'])
-@cache.cached(timeout=86400) # 24h cache
+@cache.cached(timeout=86400, query_string=True) # 24h cache
 def search_movies():
     query = request.args.get('query')
     page = request.args.get('page', 1, type=int)

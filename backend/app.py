@@ -12,28 +12,27 @@ def create_app(config_override=None):
     app = Flask(__name__)
     CORS(app)
 
-    # Configs...
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET_KEY')
 
-    # Cache Config
     redis_url = os.environ.get('CACHE_REDIS_URL')
     if redis_url:
         app.config['CACHE_TYPE'] = 'RedisCache'
         app.config['CACHE_REDIS_URL'] = redis_url
     else:
         app.config['CACHE_TYPE'] = 'SimpleCache'
-    
+
     app.config['CACHE_DEFAULT_TIMEOUT'] = 300
 
-    # Inizializza le estensioni collegate all'app
+    if config_override:
+        app.config.update(config_override)
+
     db.init_app(app)
     jwt.init_app(app)
     migrate.init_app(app, db)
-    cache.init_app(app) # <--- Questo collega l'estensione creata in extensions.py
+    cache.init_app(app) 
 
-    # Registra Blueprints...
     app.register_blueprint(auth_bp, url_prefix='/auth') 
     app.register_blueprint(reviews_bp, url_prefix='/reviews') 
     app.register_blueprint(movies_bp, url_prefix='/movies') 
