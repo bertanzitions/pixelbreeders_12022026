@@ -1,46 +1,99 @@
-# Requirements
-You must have Docker installed
 
-# How to install
-docker-compose up --build
+![Pixel Breeders](./planning/background.png)
 
-# How to test
-docker-compose exec backend pytest --cov
+  
 
-# Implementation plan + requirements
+## Pixel Breeders - Movie Database Challenge
 
-## Basic setup
-● Technical Stack & Setup (check)
-    ○ Frontend: React with TypeScript.
-    ○ Backend: Python with Flask.
-    ○ Database: Postgre
-● External API
-    ○ Test using Postman: The Movie Database (TMDB)
-● Interface planning using Figma
-● Model database
+  
+
+> Technical assessment for the Web Development Internship position at **Pixel Breeders**.
+
+  
+
+This project is a full-stack web application designed to allow users to search for movies via the TMDB API, view detailed information, and manage personal ratings. It leverages **Docker** for containerization, **Redis** for caching external API responses to improve performance, and **PostgreSQL** for persistent user data.
+
+  
+
+---
+
+  
+
+## 🏗️ Infrastructure & Architecture
+
+  
+
+The application is fully containerized using Docker Compose. Below is the high-level architecture showing how the services communicate within the Docker network.
+
+![Pixel Breeders](./planning/implementation.png)
+
+### 📋 Requirements
+
+You must have Docker installed on your machine.
+
+  
+
+### 🚀 How to install & Run
+
+The entire application (Frontend, Backend, Database, and Cache) can be launched with a single command. The entrypoint script automatically handles database migrations.
+
+    docker-compose  up  --build
+
+Access  the  application  at:  http://localhost:3000
+
+### 🧪 How to test
+
+To run the unit tests and check code coverage for the backend:
 
 
-## Feature checklist
-● Página Principal
-    ○ Barra de pesquisa: Busca na API pública do TMDB
-    ○ Listagem de resultados
-    ○ Estados de loading
-    ○ Interação: Ao clicar em um filme, abre um modal/página do filme
-● Modal/Página do filme
-    ○ Informações da API pública: sinopse, data de lançamento, lista de elenco
-    ○ Avaliação
-        ■ Se o filme não foi avaliado: o usuário pode dar uma nota
-        ■ Se o filme já foi avaliado: a nota deve ser carregada e o usuário pode
-        editar ou remover a nota
+    docker-compose exec backend pytest --cov
 
-    ○ Botão de fechar/voltar para a página principal
-● Página "Filmes Avaliados"
-    ○ Listagem dos filmes que o usuário avaliou
-    ○ Além de título/pôster, deve conter a nota do usuário
-    ○ Interação: Ao clicar em um filme, abre um modal/página do filme
+### 📝 Implementation plan + requirements
+**Basic setup**
+-   [x] Technical Stack & Setup
+-   [x] Frontend: React with TypeScript.
+-   [x] Backend: Python with Flask.
+-   [x] Database: PostgreSQL.
+-   [x] External API
+-   [x] Test using Postman
+    -   [x] The Movie Database (TMDB).
+    -   [x] The final API.
+-   [x] Database modeling.
 
-## Database modelling
+**Main Page**
+-   [x] Search bar: Search on TMDB public API.
+-   [x] Results list: Display of found movies.
+-   [x] Loading states: Visual feedback during search.
+-   [x] Interaction: Clicking on a movie opens a movie modal/page.
+
+**Movie Modal/Page**
+-   [x] Public API information:
+    -   [x] Synopsis
+    -   [x] Release date
+    -   [x] Cast list
+    -   [x] Rating:
+        -   [x] If the movie hasn't been rated: user can give a score (1-5).
+        -   [x] If the movie has already been rated: the score must load, and the user can edit or remove the score.
+-   [x] Navigation: Close/Back button to the main page.
+
+**"Rated Movies" Page**
+-   [x] Listing: Movies the user has rated.
+-   [x] Content: Besides title/poster, must contain the user's score.
+-   [x] Interaction: Clicking on a movie opens a movie modal/page
+
+**Bonus Features (Extra Points)**
+-   [x] Pagination or infinite scroll
+-   [x] Filter by genre or year
+-   [x] Authentication
+-   [x] Cache implementation
+-   [x] Application dockerization
+
+### 🗃️ Database Modelling
+
+The database was designed to persist user ratings while minimizing redundancy.
+
+Note: data was added to the Movie class (locally) so that it is not necessary to retrieve that data from external services (TMDB) every time the user views their rated list.
+
+The composition of actors is not maintained in the local database, with the assumption that this data does not have intensive use for the local user context and can be fetched from the API/Cache when needed.
 
 ![classdiagram](./planning/classdiagram.png)
-
-Note: more data was added to Movie class so that it is not necessary to retrieve that data from external services always. The composition of actors is not maintained in the database with the assumption that it doesn't have intensive use.
