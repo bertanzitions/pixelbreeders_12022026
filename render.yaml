@@ -20,9 +20,8 @@ services:
         sync: false
 
   # FRONTEND
-  - type: static
+  - type: static_site
     name: pixelbreeders-frontend
-    env: static
     rootDir: frontend
     buildCommand: "npm install && npm run build"
     publishDir: build
