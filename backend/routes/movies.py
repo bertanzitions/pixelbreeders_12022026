@@ -7,6 +7,8 @@ movies_bp = Blueprint('movies', __name__)
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 TMDB_BASE_URL = os.environ.get('TMDB_BASE_URL')
 
+# connects to the TMDB API and searches for movies
+# a query string is mandatory (movie title), not year, page and genre have defaultss
 @movies_bp.route('/search', methods=['GET'])
 def search_movies():
     query = request.args.get('query')
