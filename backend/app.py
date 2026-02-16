@@ -45,6 +45,8 @@ def create_app(config_override=None):
     
     return app
 
+# Gunicorn for deploy needs it
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     app.run(host='0.0.0.0', port=5000, debug=True)
