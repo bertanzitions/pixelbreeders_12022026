@@ -1,9 +1,7 @@
 import os
 from flask import Flask, jsonify
 from flask_cors import CORS
-from flask_migrate import Migrate
-from flask_jwt_extended import JWTManager
-from models import db
+from extensions import db, cache, jwt, migrate
 from routes.auth import auth_bp
 from routes.review import reviews_bp
 from routes.movies import movies_bp
@@ -14,17 +12,28 @@ def create_app(config_override=None):
     app = Flask(__name__)
     CORS(app)
 
+    # Configs...
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET_KEY')
 
-    if config_override:
-        app.config.update(config_override)
+    # Cache Config
+    redis_url = os.environ.get('CACHE_REDIS_URL')
+    if redis_url:
+        app.config['CACHE_TYPE'] = 'RedisCache'
+        app.config['CACHE_REDIS_URL'] = redis_url
+    else:
+        app.config['CACHE_TYPE'] = 'SimpleCache'
+    
+    app.config['CACHE_DEFAULT_TIMEOUT'] = 300
 
-    jwt = JWTManager(app)
+    # Inizializza le estensioni collegate all'app
     db.init_app(app)
-    migrate = Migrate(app, db)
+    jwt.init_app(app)
+    migrate.init_app(app, db)
+    cache.init_app(app) # <--- Questo collega l'estensione creata in extensions.py
 
+    # Registra Blueprints...
     app.register_blueprint(auth_bp, url_prefix='/auth') 
     app.register_blueprint(reviews_bp, url_prefix='/reviews') 
     app.register_blueprint(movies_bp, url_prefix='/movies') 

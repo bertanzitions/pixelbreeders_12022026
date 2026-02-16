@@ -17,6 +17,16 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   backend:
     build: ./backend
     ports:
@@ -24,12 +34,16 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
+      
     environment:
       - DATABASE_URL=postgresql://lucassb:lucassb@db:5432/pixelbreeders
       - TMDB_API_KEY=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NmI5MmY0N2QwOGNmZTEzYjMxOThkNjFlODU3NjkzNiIsIm5iZiI6MTc3MDkxNjU3MS45NDMsInN1YiI6IjY5OGUwYWRiNDcwZWZjMzRiNDQxNmVhNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DmXH3cBPl-M54tJzTNatIios8tA8iK65R1q-SLrdjkY
       - TMDB_BASE_URL=https://api.themoviedb.org/3
       - PYTHONPATH=/app
       - JWT_SECRET_KEY=pixelbreeders
+      - CACHE_REDIS_URL=redis://redis:6379/0
     volumes:
       - ./backend:/app
     # handles migrations when first deploy or not
