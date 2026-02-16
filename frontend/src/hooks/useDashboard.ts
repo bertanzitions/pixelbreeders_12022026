@@ -83,6 +83,8 @@ export const useDashboard = () => {
     } catch (error) {
       console.error("Rate movie error", error);
     }
+
+    fetchReviewedMovies();
   };
 
   const handleDeleteRating = async () => {
@@ -98,6 +100,7 @@ export const useDashboard = () => {
     } catch (error) {
       console.error("Delete rating error", error);
     }
+    fetchReviewedMovies();
   };
 
   // Handlers
@@ -111,6 +114,7 @@ export const useDashboard = () => {
   };
 
   const openModal = (movie: Movie) => {
+    fetchReviewedMovies();
     const existing = reviewedMovies.find(r => String(r.tmdb_id) === String(movie.tmdb_id));
     setSelectedMovie(existing || { ...movie });
   };
