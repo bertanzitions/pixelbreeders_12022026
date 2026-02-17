@@ -54,14 +54,14 @@ To run the unit tests and check code coverage for the backend:
 
 | Name | Stmts | Miss | Cover | Missing |
 |--|--|--|--|--|
-| **app.py** | 39 | 5 | 87% | 21-22, 44, 49-50 |
+| **app.py** | 39 | 2 | 95% | 44, 52 |
 | **models.py** | 37 | 0 | 100% | |
 | **routes/auth.py** | 36 | 0 | 100% | |
 | **routes/cast.py** | 23 | 0 | 100% | |
 | **routes/genres.py** | 22 | 0 | 100% | |
 | **routes/movies.py** | 35 | 0 | 100% | |
 | **routes/review.py** | 75 | 0 | 100% | |
-| **TOTAL** | **267** | **5** | **98%** | |
+| **TOTAL** | **267** | **2** | **99%** | |
 
 ### 🗃️ Database Modelling
 
