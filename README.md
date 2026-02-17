@@ -63,6 +63,19 @@ To run the unit tests and check code coverage for the backend:
 | **routes/review.py** | 75 | 0 | 100% | |
 | **TOTAL** | **267** | **5** | **98%** | |
 
+### 🗃️ Database Modelling
+
+The database was designed to persist user ratings while minimizing redundancy.
+
+Note: data was added to the Movie class (locally) so that it is not necessary to retrieve that data from external services (TMDB) every time the user views their rated list.
+
+The composition of actors is not maintained in the local database, with the assumption that this data does not have intensive use for the local user context and can be fetched from the API/Cache when needed.
+
+![classdiagram](./planning/classdiagram.png)
+
+### 🚀 Deployment
+![deployment](./planning/deployment.png)
+
 ### 📝 Implementation plan + requirements
 **Basic setup**
 -   [x] Technical Stack & Setup
@@ -103,12 +116,3 @@ To run the unit tests and check code coverage for the backend:
 -   [x] Cache implementation
 -   [x] Application dockerization
 
-### 🗃️ Database Modelling
-
-The database was designed to persist user ratings while minimizing redundancy.
-
-Note: data was added to the Movie class (locally) so that it is not necessary to retrieve that data from external services (TMDB) every time the user views their rated list.
-
-The composition of actors is not maintained in the local database, with the assumption that this data does not have intensive use for the local user context and can be fetched from the API/Cache when needed.
-
-![classdiagram](./planning/classdiagram.png)
