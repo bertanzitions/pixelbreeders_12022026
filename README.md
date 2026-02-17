@@ -13,7 +13,7 @@
 
 This project is a full-stack web application designed to allow users to search for movies via the TMDB API, view detailed information, and manage personal ratings. It leverages **Docker** for containerization, **Redis** for caching external API responses to improve performance, and **PostgreSQL** for persistent user data.
 
-  
+> The deployment of the app can be acessed in this link: https://pixelbreeders-12022026.onrender.com/  
 
 ---
 
